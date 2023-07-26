@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_company_secondary_currency_inherit">
+            <field name="name">res.company.form.inherit</field>
+            <field name="inherit_id" ref="base.view_company_form" />
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="report_currency_id" options="{'no_create': True,'no_open':True}" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

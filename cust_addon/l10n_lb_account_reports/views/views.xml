@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <template id="search_template_extra_options_inherit" inherit_id="account_reports.search_template_extra_options">
+            <xpath expr="//div[hasclass('o_filter_menu')]" position="inside">
+                <a
+                    role="menuitem"
+                    class="dropdown-item js_account_report_bool_filter"
+                    t-if="options.get('secondary_currency') != None"
+                    title="secondary_currency"
+                    data-filter="secondary_currency"
+                >
+                    Show in Secondary Currency
+                </a>
+            </xpath>
+        </template>
+    </data>
+</odoo>

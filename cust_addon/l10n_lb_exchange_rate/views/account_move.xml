@@ -1,0 +1,139 @@
+<odoo>
+    <data>
+        <record id="form_view_account_move" model="ir.ui.view">
+            <field name="name">Special currency rate</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_post']" position="before">
+                    <button
+                            name="recompute_journal_items"
+                            class="oe_highlight"
+                            string="Recompute Journal Items"
+                            type="object"
+                            attrs="{'invisible': ['|', ('country_code', '!=', 'LB'), ('state', '!=', 'draft')]}"
+                    />
+                </xpath>
+                <xpath expr="//field[@name='payment_reference']" position="after">
+                    <field name='is_currency_locked_document' invisible='1'/>
+                    <field
+                            name="use_special_rate"
+                            force_save='1'
+                            attrs="{'readonly': ['|',('state', '!=', 'draft'),('is_currency_locked_document','=',True)]}"
+                    />
+                    <field
+                            name="special_currency_rate"
+                            attrs="{'invisible': [('use_special_rate', '=', False)], 'readonly': ['|',('state', '!=', 'draft'),('is_currency_locked_document','=',True)]}"
+                            force_save='1'
+                    />
+                    <field name="latest_lbc_rate" readonly='1'/>
+                    <field name="latest_special_rate" readonly='1'/>
+                </xpath>
+                <xpath expr='//field[@name="currency_id"]' position='attributes'>
+                    <attribute name='attrs'>
+                        {'readonly': ['|',('state', '!=', 'draft'),('is_currency_locked_document','=',True)]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='price_total']" position="after">
+                    <field name="total_usl" force_save='1' optional="show"/>
+                    <field name="total_lbp" force_save='1' optional="show"/>
+                    <field name="total_gov" force_save='1' optional="show"/>
+                    <field name="lbp_credit" invisible='1'/>
+                    <field name="lbp_debit" invisible='1'/>
+                    <field name="special_currency_rate" invisible='1' force_save='1'/>
+                    <field name="is_tax_line" invisible='1' force_save='1'/>
+                    <field
+                            name='total_tax_amount'
+                            attrs="{'column_invisible': [('parent.move_type', '=', 'entry')]}"
+                            force_save='1'
+                    />
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='credit']" position="after">
+                    <field name="lbp_credit" sum="Total Credit LBP" force_save='1' optional="show"/>
+                    <field name="lbp_debit" sum="Total Debit LBP" force_save='1' optional="show"/>
+                    <field name="gov_credit" sum="Total Credit GOV" force_save='1' optional="show"/>
+                    <field name="gov_debit" sum="Total Credit GOV" force_save='1' optional="show"/>
+                    <field name="total_usl" force_save='1' optional="show"/>
+                    <field name="total_lbp" force_save='1' optional="show"/>
+                    <field name="total_gov" force_save='1' optional="hide"/>
+                    <field name="special_currency_rate" invisible='1' force_save='1'/>
+                    <field name="is_tax_line" invisible='1' force_save='1'/>
+                    <field
+                            name='total_tax_amount'
+                            attrs="{'column_invisible': [('parent.move_type', '=', 'entry')]}"
+                            force_save='1'
+                    />
+                </xpath>
+                <xpath expr="//group[hasclass('oe_subtotal_footer')]" position="inside">
+                    <field name="total_lbp"/>
+                    <field name="total_untaxed_gov"/>
+                    <field name="total_gov_tax"/>
+                    <field name="total_gov"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_account_journal_entry_tax" model="ir.actions.act_window">
+            <field name="context">{'search_default_group_by_move': 1, 'create':0}</field>
+            <field name="name">Taxed Journal Items</field>
+            <field name="res_model">account.move.line</field>
+            <field name="domain">
+                [('tax_ids', '!=', False)]
+            </field>
+            <field name="view_id" ref="account.view_move_line_tree_grouped"/>
+            <field name="view_mode">tree,pivot,graph,form,kanban</field>
+        </record>
+
+        <record id="action_account_move_out_tax" model="ir.actions.act_window">
+            <field name="context">{'search_default_group_by_move': 1, 'create':0}</field>
+            <field name="name">Taxed Journal Items</field>
+            <field name="res_model">account.move.line</field>
+            <field name="domain">
+                [('tax_ids', '!=', False),('move_id.move_type','not in',['in_invoice', 'in_refund'])]
+            </field>
+            <field name="view_id" ref="account.view_move_line_tree_grouped"/>
+            <field name="view_mode">tree,pivot,graph,form,kanban</field>
+        </record>
+
+        <record id="action_account_move_in_tax" model="ir.actions.act_window">
+            <field name="context">{'search_default_group_by_move': 1, 'create':0}</field>
+            <field name="name">Taxed Journal Items</field>
+            <field name="res_model">account.move.line</field>
+            <field name="domain">
+                [('tax_ids', '!=', False),('move_id.move_type','in',['in_invoice', 'in_refund'])]
+            </field>
+            <field name="view_id" ref="account.view_move_line_tree_grouped"/>
+            <field name="view_mode">tree,pivot,graph,form,kanban</field>
+        </record>
+        <menuitem
+                id="menu_action_general_move_tax"
+                action="action_account_journal_entry_tax"
+                parent='account.menu_finance_entries'
+                sequence="1000"
+        />
+        <menuitem
+                id="menu_action_move_out_invoice_tax"
+                action="action_account_move_out_tax"
+                parent='account.menu_finance_receivables'
+                sequence="1000"
+        />
+        <menuitem
+                id="menu_action_move_in_invoice_tax"
+                action="action_account_move_in_tax"
+                parent='account.menu_finance_payables'
+                sequence="1000"
+        />
+        <record id="view_move_line_tree_grouped" model="ir.ui.view">
+            <field name="name">view_move_line_tree_grouped</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_tree_grouped"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='credit']" position="after">
+                    <field name="gov_credit" optional="show"/>
+                    <field name="gov_debit" optional="show"/>
+                    <field name="total_tax_amount" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,89 @@
+<odoo>
+    <template id="report_fsm_order_document">
+        <t t-call="web.external_layout">
+            <t t-set="address">
+                <div
+                    t-field="doc.partner_id"
+                    t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;email&quot;]}"
+                />
+            </t>
+            <div class="page">
+                <div class="oe_structure" />
+                <hr />
+                <h2>
+                    FS Order #
+                    <span t-field="doc.name" />
+                    <t t-if="doc.template_id"> (<span t-field="doc.template_id.name" />)
+                    </t>
+                </h2>
+                <div class="row gy-5">
+                    <div class="col-6">
+                        <div id="service" class="mb-5">
+                            <h4>Service</h4>
+                            <span t-field="doc.service"/>
+                        </div>
+                        <div id="service_type" class="mb-5">
+                            <h4>Service Type</h4>
+                            <span t-field="doc.service_type"/>
+                        </div>
+                        <div class="signature">
+                            <h4 class="mb-2"> Signature </h4>
+                            <span>-------------------------------------</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div t-if="doc.description" id="description" class="mb-5">
+                                <h4>Description</h4>
+                                <p t-field="doc.description" />
+                        </div>
+                        <t t-if="doc.scheduled_date_start">
+                            <div class="mb-5">
+                                <strong>Start Date:</strong>
+                                <span
+                                    t-field="doc.scheduled_date_start"
+                                    t-options="{'widget': 'datetime', 'tz': doc.location_id.tz}"
+                                />
+                            </div>
+                        </t>
+                        <t t-if="doc.scheduled_date_end">
+                            <div>
+                                <strong>End Date:</strong>
+                                <span
+                                    t-field="doc.scheduled_date_end"
+                                    t-options="{'widget': 'datetime', 'tz': doc.location_id.tz}"
+                                />
+                            </div>
+                        </t>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.fsm_order_line_ids" t-as="line">
+                                    <tr>
+                                        <td><span t-field="line.product_id.name" /></td>
+                                        <td><span t-field="line.quantity" /></td>
+                                        <td><span t-field="line.subtotal" /></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="oe_structure" />
+            </div>
+        </t>
+    </template>
+    <template id="report_fsm_order">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="fieldservice.report_fsm_order_document" />
+            </t>
+        </t>
+    </template>
+</odoo>
+

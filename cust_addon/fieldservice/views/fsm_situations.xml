@@ -1,0 +1,34 @@
+<odoo>
+    <!-- Field Service Stage -->
+    <record id="fsm_situation_tree_view" model="ir.ui.view">
+        <field name="name">Situations</field>
+        <field name="model">fsm.situations</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <record id="fsm_situation_form_view" model="ir.ui.view">
+        <field name="name">Situations</field>
+        <field name="model">fsm.situations</field>
+        <field name="arch" type="xml">
+            <form string="Stage">
+                <sheet>
+                    <label for="name">Name</label>
+                    <field name="name"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_fsm_situations" model="ir.actions.act_window">
+        <field name="name">Situations</field>
+        <field name="res_model">fsm.situations</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Situation.
+            </p>
+        </field>
+    </record>
+</odoo>

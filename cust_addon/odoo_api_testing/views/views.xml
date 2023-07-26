@@ -1,0 +1,356 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="odoo_api_testing_tree">
+      <field name="name">Quico Tech list</field>
+      <field name="model">odoo.api.testing</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="odoo_api_testing_form_view">
+      <field name="name">Quico Tech Form </field>
+      <field name="model">odoo.api.testing</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+             <div class="oe_button_box" name="button_box">
+                        <button name="sendReq"
+                                string="Send Request"
+                                icon="fa-external-link"
+                                class="oe_stat_button"
+                                type="object"
+                        />
+            </div>
+            <group>
+                <group>
+                <field name="name"/>
+                <field name="value"/>
+                <field name="value2"/>
+                <field name="description"/>
+                <field name="user_id"/>
+                <field name="image" widget="many2many_binary"/>
+                </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>    
+
+    <record model="ir.actions.act_window" id="odoo_api_action">
+      <field name="name">Quico Tech Window</field>
+      <field name="res_model">odoo.api.testing</field>
+    </record>
+
+    <record model="ir.actions.server" id="action_notify">
+      <field name="name">Notify State</field>
+      <field name="model_id" ref="model_odoo_api_testing"/>
+      <field name="state">code</field>
+      <field name="code">action = records.notify()</field>
+    </record>
+
+     <record model="ir.actions.server" id="action_sendreq">
+      <field name="name">Send Request</field>
+      <field name="model_id" ref="model_odoo_api_testing"/>
+      <field name="state">code</field>
+      <field name="code">action = records.sendReq()</field>
+    </record>    
+
+  <record model="ir.ui.view" id="vip_subscribe_tree_view">
+      <field name="name">vip list</field>
+      <field name="model">vip.subscribe</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="subscriber_id"/>
+          <field name="cost"/>
+          <field name="start_date"/>
+         <field name="end_date"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="vip_subscribe_form_view">
+      <field name="name"> vip Form </field>
+      <field name="model">vip.subscribe</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+                <group>
+                <field name="subscriber_id"/>
+                <field name="cost"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="vip_subscribe_kanban_view">
+    <field name="name">Vip Subscribers</field>
+    <field name="model">vip.subscribe</field>
+    <field name="arch" type="xml">
+    <kanban>
+                <field name="subscriber_id"/>
+                <field name="cost"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <templates>
+                      <t t-name="kanban-box">
+                              <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                  <div>
+                                      <strong>
+                                          <field name="subscriber_id" />
+                                      </strong>
+                                  </div>
+                                  <div>
+                                      <field name="cost"/>
+                                  </div>
+                                  <div class="o_kanban_record_bottom">
+                                      <div class="oe_kanban_bottom_left">
+                                          <field name="start_date"/>
+                                      </div>
+                                      <div class="oe_kanban_bottom_right">
+                                          <field name="end_date"/>
+                                      </div>
+                                  </div>
+                              </div>
+                        </t>
+                    </templates>
+            </kanban>
+          </field>
+        </record>
+        
+    
+  <record model="ir.actions.act_window" id="vip_subscribe_action">
+      <field name="name">Vip Subscriptions</field>
+      <field name="res_model">vip.subscribe</field>
+      <field name="view_mode">tree,form,kanban,graph</field>
+  </record>
+
+     <record model="ir.ui.view" id="banners_tree">
+	     <field name="name">Banners</field>
+	     <field name="model">banners</field>
+	     <field name="arch" type="xml">
+		     <tree>
+			     <field name="image_1"/>
+			     <field name="image_2"/>
+			     <field name="image_3"/>
+			     <field name="image_4"/>
+			     <field name="image_5"/>
+		     </tree>
+	     </field>
+     </record>
+
+     <record model="ir.ui.view" id="banners_form">
+	     <field name="name">Banners Form </field>
+	     <field name="model">banners</field>
+	     <field name="arch" type="xml">
+		     <form>
+			     <sheet>
+				     <group name="image_group" string="Banner Images">
+					     <div class="oe_image_group">
+						     <div class="oe_image" style="display: inline-block;"> 
+							     <field name="image_1" widget="image" options='{"size": [150, 150]}' nolabel="1" />
+						     </div> 
+						     <div class="oe_image" style="display: inline-block;">
+							     <field name="image_2" widget="image" options='{"size": [150, 150]}' nolabel="1"/>
+						     </div>
+						     <div class="oe_image" style="display: inline-block;">
+							     <field name="image_3" widget="image" options='{"size": [150, 150]}' nolabel="1"/>
+						     </div>
+						     <div class="oe_image" style="display: inline-block;">
+							     <field name="image_4" widget="image" options='{"size": [150, 150]}' nolabel="1"/>
+						     </div>
+						     <div class="oe_image" style="display: inline-block;">
+							     <field name="image_5" widget="image" options='{"size": [150, 150]}' nolabel="1"/>
+						     </div>
+					     </div>
+				     </group>
+			     </sheet>
+		     </form>
+	     </field>
+     </record>
+
+
+     <record model="ir.actions.act_window" id="banners_action">
+	     <field name="name">Quico Banners</field>
+	     <field name="res_model">banners</field>
+	     <field name="view_mode">tree,form</field>
+     </record>
+    
+
+    <record id="view_product_form_inherit" model="ir.ui.view">
+	        <field name="name">product.template.common.form.inherit</field>
+	        <field name="model">product.template</field>
+	        <field name="inherit_id" ref="product.product_template_form_view"/>
+		<field name="arch" type="xml">
+		<xpath expr="//field[@name='categ_id']" position="after">
+          		<field name="product_priority"/>
+        	</xpath>
+	        <xpath expr="//page[1]" position="inside">
+                <group>
+                    <group string="VIP">
+                        <field name="vip"/>
+                        <field name="vip_price" attrs= "{'invisible':[('vip','!=',True)]}" widget="monetary"/>
+                    </group>
+                    <group string="Sale %">
+                        <field name="hot_deal"/>
+                        <field name="offer"/>
+                        <field name="sale"/>
+                        <field name="sale_percent" attrs= "{'invisible':[('sale','!=',True)]}"/>
+                        <field name="sale_price" attrs= "{'invisible':[('sale','!=',True)]}" widget="monetary"  readonly="0"/>
+                    </group>
+                  </group>
+	            </xpath>
+	        </field>
+	    </record> 
+    
+
+      <record id="view_attribute_value_form_inherit" model="ir.ui.view">
+	        <field name="name">product.attribute.value.form.inherit</field>
+	        <field name="model">product.attribute</field>
+	        <field name="inherit_id" ref="product.product_attribute_view_form"/>
+	        <field name="arch" type="xml">
+	            <xpath expr="//notebook/page[1]//field//tree/field[@name='is_custom']" position="after">
+	                    <field name="image" widget="image" options="{'size':[50,50]'}"/>
+	            </xpath>
+	        </field>
+	    </record> 
+
+      <record id="view_category_form_inherit" model="ir.ui.view">
+	        <field name="name">product.category.form.inherit</field>
+	        <field name="model">product.category</field>
+	        <field name="inherit_id" ref="product.product_category_form_view"/>
+	        <field name="arch" type="xml">
+	            <xpath expr="//group[1]//field" position="before">
+	                    <field name="image" widget="image" options="{'size': [150, 150]}"/>
+                      <field name="priority"/>
+	            </xpath>
+	        </field>
+	    </record> 
+
+      <record id="view_sale_order_form_inherit" model="ir.ui.view">
+	        <field name="name">sale.order.form.inherit</field>
+	        <field name="model">sale.order</field>
+	        <field name="inherit_id" ref="sale.view_order_form"/>
+	        <field name="arch" type="xml">
+	            <xpath expr="//group[@name='order_details']/field[@name='payment_term_id']" position="replace">
+                      <field name="payment_method"/>
+                      <field name="service_order"/>
+              </xpath>
+               <xpath expr="//button[@name='action_confirm']" position="attributes">
+                      <attribute name="method">action_confirm</attribute>
+              </xpath>
+               <xpath expr="//field[@name='note']" position="replace">
+                      <field name="review"/>
+                      <field name="order_rate" widget="rating"/>
+              </xpath>
+	        </field>
+	    </record> 
+
+      <record id="view_res_partner_form_inherit" model="ir.ui.view">
+	        <field name="name">res.partner.form.inherit</field>
+	        <field name="model">res.partner</field>
+	        <field name="inherit_id" ref="base.view_partner_form"/>
+	        <field name="arch" type="xml">
+	            <xpath expr="//group[1]//group/field[@name='vat']" position="after">
+	                    <field name="is_vip"/>
+                      <field name="dob"/>
+	            </xpath>
+              <xpath expr="//form//sheet" position="before">
+                <header>
+                    <field name="show_add_button" invisible="1"/>
+                    <field name="show_renew_button" invisible="1"/>
+                    <button name="add_subscriber" class="oe_highlight" string="Add Subscriber" type="object" attrs="{'invisible': [('show_add_button', '=', False)]}"/>
+                    <button name="renew_subscriber" string="Renew Subscriber" type="object" attrs="{'invisible': [('show_renew_button', '=', False)]}"/>
+                </header>
+              </xpath>
+	        </field>
+	    </record>
+
+      <record id="view_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='button_validate']" position="attributes">
+                <attribute name="name">button_validate</attribute>
+                <attribute name="attrs">{'invisible': [('state', 'in', ('draft','waiting','confirmed','assigned'))]}</attribute>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                    <button name="on_the_way" string="On the Way" type="object" class="oe_highlight" attrs= "{'invisible':[('state','==','done')]}"/>
+            </xpath>
+            <xpath expr="//button[@name='button_scrap']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='state']" position="replace">
+              <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,assigned,on_the_way,done"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_expense_form_inherit" model="ir.ui.view">
+        <field name="name">hr.expense.form.inherit</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="before">
+                <field name="exp_nb"/>
+                <field name="vendor"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="ir_cron_partner_update_vip_state" model="ir.cron">
+            <field name="name">Partner: update vip state</field>
+            <field name="model_id" ref="model_odoo_api_testing"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.update_vip_state()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+    </record>
+    <record id="account_move_form_inherit" model="ir.ui.view">
+    <field name="name">account.move.form.inherit</field>
+    <field name="model">account.move</field>
+    <field name="inherit_id" ref="account.view_move_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='payment_reference']" position="after">
+            <field name="received"/>
+        </xpath>
+    </field>
+    </record>
+
+    <record id="ir_cron_user_update_expiry_code" model="ir.cron">
+      <field name="name">User: update code expiry</field>
+      <field name="model_id" ref="model_verify_user"/>
+      <field name="type">ir.actions.server</field>
+      <field name="state">code</field>
+      <field name="code">model.update_code_expiry()</field>
+      <field name="interval_number">1</field>
+      <field name="interval_type">minutes</field>
+      <field name="numbercall">-1</field>
+    </record>
+    
+    <record id="ir_cron_refresh_verify_counter" model="ir.cron">
+      <field name="name">User: refresh verify counter</field>
+      <field name="model_id" ref="model_verify_user"/>
+      <field name="type">ir.actions.server</field>
+      <field name="state">code</field>
+      <field name="code">model.refresh_verify_counter()</field>
+      <field name="interval_number">1</field>
+      <field name="interval_type">minutes</field>
+      <field name="numbercall">-1</field>
+    </record>
+	    
+    <menuitem name="Quico Tech" id="vip_subscribe_action_menu" action="vip_subscribe_action" web_icon="odoo_api_testing,assets/Quico.png"/>
+    <menuitem id="banners_menu" name="Banners" parent="vip_subscribe_action_menu" action="banners_action" sequence="1" /> 	    
+  </data>
+</odoo>

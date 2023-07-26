@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <record id="form_view_sale_order" model="ir.ui.view">
+            <field name="name">Special currency rate</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="use_special_rate"/>
+                    <field name="special_currency_rate" attrs="{'invisible': [('use_special_rate', '=', False)]}"/>
+                    <field name="latest_lbc_rate" readonly='1'/>
+                    <field name="latest_special_rate" readonly='1'/>
+                    <field name="account_move_currency_id" required="1"/>
+                    <field name="country_code" invisible="1"/>
+                </xpath>
+                <xpath expr="//page[@name='order_lines']/field[@name='order_line']/tree/field[@name='price_subtotal']"
+                       position="after">
+                    <field name="total_usl" optional="show"/>
+                    <field name="total_lbp" optional="show"/>
+                    <field name="total_gov" optional="show"/>
+                    <field
+                            name='total_tax'
+                            force_save='1'
+                            attrs="{'column_invisible': [('parent.country_code', '!=', 'LB')]}"
+                    />
+                </xpath>
+                <xpath expr="//field[@name='tax_totals_json']" position="after">
+                    <field name="total_usl"/>
+                    <field name="total_lbp"/>
+                    <field name="total_untaxed_gov"/>
+                    <field name='total_tax' force_save='1' attrs="{'invisible': [('country_code', '!=', 'LB')]}"/>
+                    <field name="total_gov"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

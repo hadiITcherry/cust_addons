@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="my_filtered_pickings" model="ir.actions.act_window">
+        <field name="name">My Delivery Orders</field>
+        <field name="res_model">stock.picking</field>
+        <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[('user_id', '=', uid)]</field>
+            <field name="context">{'create':False}</field>
+        </record>
+
+        <menuitem 
+            id="menu_stock_piking"
+            name="Quico Delivery"
+            action="my_filtered_pickings"
+            sequence="1"
+            web_icon="quico_delivery,assets/delivery.png"/>
+    </data>
+</odoo>

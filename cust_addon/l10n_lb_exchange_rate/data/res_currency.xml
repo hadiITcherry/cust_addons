@@ -1,0 +1,13 @@
+<odoo>
+    <data noupdate="1">
+        <record id="usl_currency" model="res.currency">
+            <field name="name">USL</field>
+            <field name="symbol">USL</field>
+        </record>
+
+        <record id="gov_currency" model="res.currency">
+            <field name="name">GOV</field>
+            <field name="symbol">GOV</field>
+        </record>
+    </data>
+</odoo>

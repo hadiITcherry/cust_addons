@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_odoo_api_testing,odoo.api.testing,model_odoo_api_testing,base.group_user,1,1,1,1
+access_vip_subscribe,vip.subscribe,model_vip_subscribe,base.group_user,1,1,1,1
+access_cart,cart,model_cart,base.group_user,1,1,1,1
+access_wishlist,wishlist,model_wishlist,base.group_user,1,1,1,1
+access_banners,banners,model_banners,base.group_user,1,1,1,1
+access_rating_product,rating.product,model_rating_product,base.group_user,1,1,1,1
+access_verify_user,verify.ser,model_verify_user,base.group_user,1,1,1,1

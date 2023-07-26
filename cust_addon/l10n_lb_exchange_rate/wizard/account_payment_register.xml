@@ -1,0 +1,20 @@
+<odoo>
+    <record id="view_account_reg_payment_form_inh" model="ir.ui.view">
+        <field name="name">account.payment.register.form.inherit</field>
+        <field name="model">account.payment.register</field>
+        <field name="inherit_id" ref="account.view_account_payment_register_form" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//group[@name='group2']" position="inside">
+                    <field name="use_special_rate" invisible='1' />
+                    <field
+                        name="special_currency_rate"
+                        readonly='1'
+                        force_save='1'
+                        attrs='{"invisible":[("source_currency_id", "=", 2)]}'
+                    />
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>
